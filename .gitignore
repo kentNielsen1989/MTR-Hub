@@ -1,0 +1,32 @@
+# Auth artifacts (created locally per-developer, contain personal identifiers)
+.dataverse-auth.json
+.ado-auth.json
+
+# .NET build output
+bin/
+obj/
+
+# Plugin packaging artifacts — transient base64 staging from MCP uploads
+*.b64
+*.b64.part*.txt
+*.singleline.b64
+*.wrapped.b64*
+
+# Playwright MCP runtime artifacts (transient logs and page snapshots)
+.playwright-mcp/
+
+# Visual Studio / Rider / VS Code user-specific
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userprefs
+
+# OS junk
+Thumbs.db
+.DS_Store
+
+# Strong name keys are kept IN the repo so any team member can rebuild.
+# If you'd rather distribute the key out-of-band, uncomment the next line.
+# *.snk
