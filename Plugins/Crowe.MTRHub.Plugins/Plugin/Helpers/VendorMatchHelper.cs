@@ -138,11 +138,11 @@ namespace Crowe.MTRHub.Plugins.Helpers
                 if (i > 0) sb.Append(',');
                 var r = rows[i];
                 sb.Append('{');
-                AppendIntField(sb, Literals.CustomApi.JsonField.Rank, r.Rank);              sb.Append(',');
-                AppendStringField(sb, Literals.CustomApi.JsonField.VendorId, r.VendorId.ToString("D"));      sb.Append(',');
-                AppendStringField(sb, Literals.CustomApi.JsonField.VendorName, r.VendorName);                sb.Append(',');
-                AppendStringField(sb, Literals.CustomApi.JsonField.VendorAccount, r.VendorAccount);          sb.Append(',');
-                AppendStringField(sb, Literals.CustomApi.JsonField.Address, r.Address);
+                AppendIntField(sb, Literals.CustomApi.FindBestVendorMatch.JsonField.Rank, r.Rank);                              sb.Append(',');
+                AppendStringField(sb, Literals.CustomApi.FindBestVendorMatch.JsonField.VendorId, r.VendorId.ToString("D"));     sb.Append(',');
+                AppendStringField(sb, Literals.CustomApi.FindBestVendorMatch.JsonField.VendorName, r.VendorName);               sb.Append(',');
+                AppendStringField(sb, Literals.CustomApi.FindBestVendorMatch.JsonField.VendorAccount, r.VendorAccount);         sb.Append(',');
+                AppendStringField(sb, Literals.CustomApi.FindBestVendorMatch.JsonField.Address, r.Address);
                 sb.Append('}');
             }
             sb.Append(']');

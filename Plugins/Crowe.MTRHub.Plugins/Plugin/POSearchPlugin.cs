@@ -6,33 +6,31 @@ using Microsoft.Xrm.Sdk;
 
 namespace Crowe.MTRHub.Plugins
 {
-    public class FindBestVendorMatchPlugin : PluginBase
+    public class POSearchPlugin : PluginBase
     {
         protected override void ExecutePlugin(ServiceConnection cnx)
         {
             var sw = Stopwatch.StartNew();
 
-            string name = ReadStringInput(cnx, Literals.CustomApi.FindBestVendorMatch.In.Name);
-            if (string.IsNullOrWhiteSpace(name))
+            string vendorNum = ReadStringInput(cnx, Literals.CustomApi.POSearch.In.VendorNum);
+            if (string.IsNullOrWhiteSpace(vendorNum))
             {
                 throw new InvalidPluginExecutionException(
-                    "The 'Name' input parameter is required and cannot be empty.");
+                    "The 'VendorNum' input parameter is required and cannot be empty.");
             }
 
-            string address = ReadStringInput(cnx, Literals.CustomApi.FindBestVendorMatch.In.Address);
-            string zip = ReadStringInput(cnx, Literals.CustomApi.FindBestVendorMatch.In.Zip);
+            string customerRef = ReadStringInput(cnx, Literals.CustomApi.POSearch.In.CustomerRef);
             int topN = ReadTopN(cnx);
 
             cnx.Trace.Trace(
-                "[+{0}ms] FindBestVendorMatch inputs: Name='{1}' Address='{2}' Zip='{3}' TopN={4}",
-                sw.ElapsedMilliseconds,
-                Mask(name), Mask(address), Mask(zip), topN);
+                "[+{0}ms] POSearch inputs: VendorNum='{1}' CustomerRef='{2}' TopN={3}",
+                sw.ElapsedMilliseconds, Mask(vendorNum), Mask(customerRef), topN);
 
             var container = new ServiceContainer(cnx);
-            var helper = new VendorMatchHelper(cnx, container);
-            string matchesJson = helper.FindMatches(name, address, zip, topN);
+            var helper = new POSearchHelper(cnx, container);
+            string matchesJson = helper.FindMatches(vendorNum, customerRef, topN);
 
-            cnx.Context.OutputParameters[Literals.CustomApi.FindBestVendorMatch.Out.Vendors] = matchesJson;
+            cnx.Context.OutputParameters[Literals.CustomApi.POSearch.Out.POs] = matchesJson;
             cnx.Trace.Trace("[+{0}ms] Returning JSON payload of {1} chars.",
                 sw.ElapsedMilliseconds, matchesJson.Length);
         }
@@ -40,16 +38,15 @@ namespace Crowe.MTRHub.Plugins
         private static string ReadStringInput(ServiceConnection cnx, string key)
         {
             if (!cnx.Context.InputParameters.Contains(key)) return null;
-            var v = cnx.Context.InputParameters[key];
-            return v as string;
+            return cnx.Context.InputParameters[key] as string;
         }
 
         private static int ReadTopN(ServiceConnection cnx)
         {
             int topN = Literals.DefaultTopN;
-            if (cnx.Context.InputParameters.Contains(Literals.CustomApi.FindBestVendorMatch.In.TopN))
+            if (cnx.Context.InputParameters.Contains(Literals.CustomApi.POSearch.In.TopN))
             {
-                var raw = cnx.Context.InputParameters[Literals.CustomApi.FindBestVendorMatch.In.TopN];
+                var raw = cnx.Context.InputParameters[Literals.CustomApi.POSearch.In.TopN];
                 if (raw is int i) topN = i;
                 else if (raw != null && int.TryParse(raw.ToString(), out var parsed)) topN = parsed;
             }

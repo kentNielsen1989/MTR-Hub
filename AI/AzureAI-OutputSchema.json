@@ -1,0 +1,53 @@
+{
+    "type": "object",
+    "properties": {
+        "documentType": {
+            "type": "string"
+        },
+        "vendor": {
+            "type": "string"
+        },
+        "zipcode": {
+            "type": "string"
+        },
+        "certNumber": {
+            "type": "string"
+        },
+        "confidence": {
+            "type": "number"
+        },
+        "notes": {
+            "type": "string"
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "heats": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "materialLines": {
+            "type": "array",
+            "items": {
+                "type": "object"
+            }
+        },
+        "chemistry": {
+            "type": "array",
+            "items": {
+                "type": "object"
+            }
+        },
+        "mechanicalTests": {
+            "type": "array",
+            "items": {
+                "type": "object"
+            }
+        }
+    }
+}

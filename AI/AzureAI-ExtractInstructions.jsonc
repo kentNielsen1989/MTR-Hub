@@ -1,0 +1,42 @@
+//Original AI prompt
+{
+  "model": "gpt-4o-2",
+  "input": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "input_text",
+          "text": "You are an expert at extracting data from Mill Test Reports (MTRs), Certificates of Analysis, and Packing Lists for steel products. The following is structured text extracted by Azure Document Intelligence from a PDF. Tables are rendered as HTML. Key-value pairs are identified. Extract all data and return ONLY a raw JSON object with NO markdown, NO code blocks, NO backticks, NO explanation. Just the JSON.\n\nUse this exact structure:\n{\"documentType\":\"MTR|PackingList|Mixed|Unknown\",\"vendor\":\"\",\"certNumber\":\"\",\"confidence\":0.0,\"notes\":\"\",\"tags\":[],\"heats\":[],\"materialLines\":[{\"tag\":\"\",\"heat\":\"\",\"coilNumber\":\"\",\"grade\":\"\",\"spec\":\"\",\"width_in\":null,\"thickness_in\":null,\"length_ft\":null,\"weight_lbs\":null,\"pieceCount\":null,\"surfaceFinish\":\"\",\"lineSource\":\"\"}],\"chemistry\":[{\"heat\":\"\",\"C\":null,\"Mn\":null,\"P\":null,\"S\":null,\"Si\":null,\"Cr\":null,\"Ni\":null,\"Mo\":null,\"Cu\":null,\"V\":null,\"Al\":null,\"CE\":null}],\"mechanicalTests\":[{\"heat\":\"\",\"tag\":\"\",\"yieldStrength_actual\":null,\"yieldStrength_required\":null,\"tensileStrength_actual\":null,\"tensileStrength_required\":null,\"elongation_actual\":null,\"elongation_required\":null,\"charpyTemp\":null,\"charpyAvgEnergy\":null,\"testStandard\":\"\"}]}\n\nRules:\n- Create ONE materialLine per distinct tag/coil number\n- Create ONE chemistry entry per distinct heat number\n- Create ONE mechanicalTests entry per distinct test result row\n- tags and heats arrays: string values only\n- confidence: 0.0-1.0 reflecting completeness and clarity of extraction\n- Return raw JSON ONLY - no markdown, no code fences\n\n--- DOCUMENT CONTENT ---\n\n"
+        },
+        {
+          "type": "input_text",
+          "text": "@{variables('DI_Markdown')}"
+        }
+      ]
+    }
+  ],
+  "max_output_tokens": 4000,
+  "temperature": 0
+}
+//Updated AI prompt
+{
+  "model": "gpt-4o-2",
+  "input": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "input_text",
+          "text": "You are an expert at extracting data from Mill Test Reports (MTRs), Certificates of Analysis, and Packing Lists for steel products. The following is structured text extracted by Azure Document Intelligence from a PDF. Tables are rendered as HTML. Key-value pairs are identified. Extract all data and return ONLY a raw JSON object with NO markdown, NO code blocks, NO backticks, NO explanation. Just the JSON.\n\nUse this exact structure:\n{\"documentType\":\"MTR|PackingList|Mixed|Unknown\",\"vendor\":\"\",\"zipcode\":\"\", \"certNumber\":\"\",\"confidence\":0.0,\"notes\":\"\",\"tags\":[],\"heats\":[],\"materialLines\":[{\"tag\":\"\",\"heat\":\"\",\"coilNumber\":\"\",\"grade\":\"\",\"spec\":\"\",\"width_in\":null,\"thickness_in\":null,\"length_ft\":null,\"weight_lbs\":null,\"pieceCount\":null,\"surfaceFinish\":\"\",\"lineSource\":\"\"}],\"chemistry\":[{\"heat\":\"\",\"C\":null,\"Mn\":null,\"P\":null,\"S\":null,\"Si\":null,\"Cr\":null,\"Ni\":null,\"Mo\":null,\"Cu\":null,\"V\":null,\"Al\":null,\"CE\":null}],\"mechanicalTests\":[{\"heat\":\"\",\"tag\":\"\",\"yieldStrength_actual\":null,\"yieldStrength_required\":null,\"tensileStrength_actual\":null,\"tensileStrength_required\":null,\"elongation_actual\":null,\"elongation_required\":null,\"charpyTemp\":null,\"charpyAvgEnergy\":null,\"testStandard\":\"\"}]}\n\nRules:\n- Create ONE materialLine per distinct tag/coil number\n- Create ONE chemistry entry per distinct heat number\n- Create ONE mechanicalTests entry per distinct test result row\n- tags and heats arrays: string values only\n- confidence: 0.0-1.0 reflecting completeness and clarity of extraction\n- Return raw JSON ONLY - no markdown, no code fences\n\n--- DOCUMENT CONTENT ---\n\n"
+        },
+        {
+          "type": "input_text",
+          "text": "@{variables('DI_Markdown')}"
+        }
+      ]
+    }
+  ],
+  "max_output_tokens": 4000,
+  "temperature": 0
+}
